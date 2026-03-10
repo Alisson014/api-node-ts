@@ -1,0 +1,29 @@
+{
+  "name": "api-node-ts",
+  "version": "1.0.0",
+  "description": "Um projeto com foco em desenvolvimento backend, a partir de tecnologias como node, express, typescript e diversas outras stacks importantes",
+  "homepage": "https://github.com/Alisson014/api-node-ts#readme",
+  "bugs": {
+    "url": "https://github.com/Alisson014/api-node-ts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alisson014/api-node-ts.git"
+  },
+  "license": "MIT",
+  "author": "José Alisson",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
