@@ -16,7 +16,11 @@
   "main": "app.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "start": "npx tsx ./src/app.ts"
+    "start": "npx tsx ./src/app.ts",
+    "knex:migrate": "npx tsx ./node_modules/knex/bin/cli.js migrate:latest",
+    "knex:rollback-all": "npx tsx ./node_modules/knex/bin/cli.js migrate:rollback --all",
+    "knex:seed": "npx tsx knex ./node_modules/knex/bin/cli.js seed:run",
+    "knex:rollback": "npx tsx ./node_modules/knex/bin/cli.js migrate:rollback"
   },
   "dependencies": {
     "dotenv": "^17.3.1",
@@ -37,7 +41,7 @@
     "@types/supertest": "^7.2.0",
     "eslint": "^10.0.3",
     "globals": "^17.4.0",
-    "sqlite": "^5.1.1",
+    "sqlite3": "^6.0.1",
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.6",
     "ts-node-dev": "^2.0.0",

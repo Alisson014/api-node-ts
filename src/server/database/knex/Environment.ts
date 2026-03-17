@@ -1,18 +1,18 @@
-import { Knex, } from 'knex';
-import path from 'path';
+import { type Knex } from "knex";
+// import path from 'path';
 
 
 export const development : Knex.Config = {
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-        filename: path.resolve( __dirname, '..', '..', '..', '..', 'database.sqlite'),
+        filename: './database.sqlite',
     },
     migrations: {
-        directory: path.resolve(__dirname, '..', 'migrations'),
+        directory: './src/server/database/migrations',
     },
     seeds: {
-        directory: path.resolve(__dirname, '..', 'seeds'),
+        directory: './src/server/database/seeds',
     },
     pool: {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

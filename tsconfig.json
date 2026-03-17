@@ -50,6 +50,7 @@
     "old_configuration_jest.mts",
     "./node_modules",
     "./tests",
-    "./build"
-  ]
+    "./build",
+    "knexfile.ts",
+  ],
 }
