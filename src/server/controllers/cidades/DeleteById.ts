@@ -20,5 +20,5 @@ export const deleteByIdValidation = validation({
 export const deleteById = async (req: Request, res: Response) => {
     console.log(req.params);
 
-    return res.status(StatusCodes.NOT_FOUND).send("Não implementado");
+    return res.status(StatusCodes.OK).send("Não implementado");
 };

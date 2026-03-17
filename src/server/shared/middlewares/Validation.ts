@@ -32,6 +32,7 @@ export const validation: ValidationType = (schemas) => async (req, res, next) =>
     if (Object.entries(errorsResult).length === 0) {
         return next();
     } else {
+        console.log(errorsResult);
         return res.status(StatusCodes.BAD_REQUEST).json({ errors: errorsResult });
         
     }

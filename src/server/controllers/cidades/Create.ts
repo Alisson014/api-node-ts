@@ -8,7 +8,7 @@ type CidadeBodyType = {
     nome: string,
 }
 const bodyValidation: yup.ObjectSchema<CidadeBodyType> = yup.object().shape({
-    nome: yup.string().required().min(3),
+    nome: yup.string().required().min(3)
 });
 
 
@@ -20,5 +20,5 @@ export const createvalidation = validation({
 export const create = async (req: Request<{}, {}, CidadeBodyType>, res: Response) => {
     console.log(req.body);
 
-    res.status(StatusCodes.NOT_FOUND).send("Não implementado");
+    res.status(StatusCodes.CREATED).json(1);
 };

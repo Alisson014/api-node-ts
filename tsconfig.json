@@ -7,9 +7,14 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "target": "esnext",
-    "types": [],
+    "types": [
+      "jest",
+    ],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -42,7 +47,7 @@
     "skipLibCheck": true,
   },
   "exclude": [
-    "./jest.config.ts",
+    "old_configuration_jest.mts",
     "./node_modules",
     "./tests",
     "./build"

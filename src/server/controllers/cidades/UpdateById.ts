@@ -29,5 +29,5 @@ export const updateById = async (req: Request, res: Response) => {
     console.log(req.params);
     console.log(req.body);
 
-    return res.status(StatusCodes.NOT_FOUND).send("Não implementado");
+    return res.status(StatusCodes.OK).json({ id: 1, nome: 'nome' });
 };
