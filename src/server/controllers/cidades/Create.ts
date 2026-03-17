@@ -2,9 +2,10 @@ import type { Request, Response } from "express";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares/Validation.js";
 import { StatusCodes } from "http-status-codes";
+import type { ICidade } from "../../database/models/Cidade.js";
 
 
-type CidadeBodyType = {
+interface CidadeBodyType extends Omit<ICidade, 'id'> {
     nome: string,
 }
 const bodyValidation: yup.ObjectSchema<CidadeBodyType> = yup.object().shape({
