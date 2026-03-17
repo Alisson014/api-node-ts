@@ -16,7 +16,7 @@ export default defineConfig([
     {
         rules: {
             semi: ["warn", "always"],
-            indent: ["warn", 4],
+            indent: ["warn", 4, { "SwitchCase": 1 }],
             "@typescript-eslint/no-unused-vars" : ["warn"],
             "@typescript-eslint/no-empty-object-type": ['off']
         }
