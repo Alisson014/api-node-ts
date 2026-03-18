@@ -3,13 +3,14 @@ import * as yup from "yup";
 import { validation } from "../../shared/middlewares/Validation.js";
 import { StatusCodes } from "http-status-codes";
 import type { ICidade } from "../../database/models/Cidade.js";
+import { CidadesProvider } from "../../database/providers/cidades/index.js";
 
 
 interface CidadeBodyType extends Omit<ICidade, 'id'> {
     nome: string,
 }
 const bodyValidation: yup.ObjectSchema<CidadeBodyType> = yup.object().shape({
-    nome: yup.string().required().min(3)
+    nome: yup.string().required().min(3).max(150)
 });
 
 
@@ -19,7 +20,15 @@ export const createvalidation = validation({
 
 
 export const create = async (req: Request<{}, {}, CidadeBodyType>, res: Response) => {
-    console.log(req.body);
+    const result = await CidadesProvider.create(req.body);
 
-    res.status(StatusCodes.CREATED).json(1);
+    if (result instanceof Error){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message
+            }
+        });
+    }
+
+    return res.status(StatusCodes.CREATED).json(result);
 };
