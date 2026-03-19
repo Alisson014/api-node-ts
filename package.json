@@ -19,7 +19,7 @@
     "start": "npx tsx ./src/app.ts",
     "knex:migrate": "npx tsx ./node_modules/knex/bin/cli.js migrate:latest",
     "knex:rollback-all": "npx tsx ./node_modules/knex/bin/cli.js migrate:rollback --all",
-    "knex:seed": "npx tsx knex ./node_modules/knex/bin/cli.js seed:run",
+    "knex:seed": "npx tsx ./node_modules/knex/bin/cli.js seed:run",
     "knex:rollback": "npx tsx ./node_modules/knex/bin/cli.js migrate:rollback"
   },
   "dependencies": {
