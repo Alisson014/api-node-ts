@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares/Validation.js";
 import { StatusCodes } from "http-status-codes";
+import { CidadesProvider } from "../../database/providers/cidades/index.js";
 
 
 type QueryPropsType = {
@@ -21,9 +22,33 @@ export const getAllValidation = validation({
 });
 
 
-export const getAll = async (req: Request<{}, {}, {}>, res: Response) => {
-    console.log(req.query);
-    console.log(req.query.limit);
+export const getAll = async (req: Request<{}, {}, {}, QueryPropsType>, res: Response) => {
+    const result = await CidadesProvider.getAll(req.query.page ?? 1, req.query.limit ?? 10, req.query.filter ?? "");
+    const count = await CidadesProvider.count(req.query.filter ?? "");
 
-    return res.status(StatusCodes.OK).json([{ id: 1, nome: "Nome" }, { id: 1, nome: "Nome" },]);
+    if (result instanceof Error){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message,
+            }
+        });
+    } else if (typeof result === 'undefined'){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: 'Erro ao buscar registros',
+            }
+        });
+    }
+
+    if (count instanceof Error){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: count.message,
+            }
+        });
+    }
+
+    res.setHeader('x-control-count', Number(count));
+
+    return res.status(StatusCodes.OK).json(result);
 };

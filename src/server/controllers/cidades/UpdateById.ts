@@ -3,6 +3,7 @@ import * as yup from "yup";
 import { validation } from "../../shared/middlewares/Validation.js";
 import { StatusCodes } from "http-status-codes";
 import type { ICidade } from "../../database/models/Cidade.js";
+import { CidadesProvider } from "../../database/providers/cidades/index.js";
 
 
 type ParamsType = {
@@ -26,9 +27,16 @@ export const updateByIdValidation = validation({
 });
 
 
-export const updateById = async (req: Request, res: Response) => {
-    console.log(req.params);
-    console.log(req.body);
+export const updateById = async (req: Request<ParamsType, {}, CidadeBodyType>, res: Response) => {
+    const result = await CidadesProvider.updateById({id: req.params.id, nome: req.body.nome});
 
-    return res.status(StatusCodes.OK).json({ id: 1, nome: 'nome' });
+    if (result instanceof Error){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message,
+            }
+        });
+    };
+
+    return res.status(StatusCodes.OK).json(result);
 };

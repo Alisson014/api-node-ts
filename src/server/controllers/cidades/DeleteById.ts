@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares/Validation.js";
 import { StatusCodes } from "http-status-codes";
+import { CidadesProvider } from "../../database/providers/cidades/index.js";
 
 
 type ParamsType = {
@@ -17,8 +18,24 @@ export const deleteByIdValidation = validation({
 });
 
 
-export const deleteById = async (req: Request, res: Response) => {
-    console.log(req.params);
+export const deleteById = async (req: Request<ParamsType>, res: Response) => {
+    const result = await CidadesProvider.deleteById(req.params.id);
 
-    return res.status(StatusCodes.OK).send("Não implementado");
+    if (result instanceof Error){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message,
+            }
+        });
+    }
+
+    if (typeof result === 'undefined'){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: 'Ação retornou uma resposta inválida',
+            }
+        });
+    }
+
+    return res.status(StatusCodes.OK).json(result);
 };
