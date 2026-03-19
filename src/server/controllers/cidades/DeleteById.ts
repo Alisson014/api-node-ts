@@ -19,6 +19,14 @@ export const deleteByIdValidation = validation({
 
 
 export const deleteById = async (req: Request<ParamsType>, res: Response) => {
+    if (!req.params.id){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: 'O parâmetro id é obrigatório',
+            }
+        });
+    }
+
     const result = await CidadesProvider.deleteById(req.params.id);
 
     if (result instanceof Error){

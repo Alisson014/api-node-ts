@@ -2,7 +2,7 @@ import { Knex } from "../../knex";
 import { ETableNames } from "../../ETableNames";
 import type { ICidade } from "../../models";
 
-export const getAll = async (page: number, limit: number, filter: string, id = 1): Promise<ICidade[] | Error | undefined> => {
+export const getAll = async (page: number, limit: number, filter: string, id: number): Promise<ICidade[] | Error | undefined> => {
     try {
         const result = await Knex(ETableNames.cidade)
             .select('*')

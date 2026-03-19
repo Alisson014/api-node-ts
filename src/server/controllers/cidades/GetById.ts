@@ -19,6 +19,14 @@ export const getByIdValidation = validation({
 
 
 export const getById = async (req: Request<ParamsType>, res: Response) => {
+    if (!req.params.id){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: 'O parâmetro id é obrigatório',
+            }
+        });
+    }
+
     const result = await CidadesProvider.getById(req.params.id);
 
     if(result instanceof Error){

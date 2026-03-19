@@ -28,6 +28,14 @@ export const updateByIdValidation = validation({
 
 
 export const updateById = async (req: Request<ParamsType, {}, CidadeBodyType>, res: Response) => {
+    if (!req.params.id){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: 'O parâmetro id é obrigatório',
+            }
+        });
+    }
+
     const result = await CidadesProvider.updateById({id: req.params.id, nome: req.body.nome});
 
     if (result instanceof Error){

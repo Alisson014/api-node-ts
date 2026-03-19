@@ -4,6 +4,8 @@ import { testServer } from "../jest.setup";
 describe('Cidades DeleteById', () => {
 
     it('Deletar Registro', async () => {
+        await testServer.post('/cidades').send({ nome: "Teste" });
+
         const res = await testServer.delete('/cidades/1');
 
         expect(res.status).toEqual(StatusCodes.OK);

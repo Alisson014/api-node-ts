@@ -4,10 +4,11 @@ import { testServer } from "../jest.setup";
 describe('Cidades UpdateById', () => {
 
     it('Atualizar Registro', async () => {
+        await testServer.post('/cidades').send({ nome: "Teste" });
         const res = await testServer.put('/cidades/1').send({ nome: 'nome' });
 
         expect(res.status).toEqual(StatusCodes.OK);
-        expect(res.body).toHaveProperty('nome');
+        expect(res.body[0]).toHaveProperty('id');
     });
 
     it('Id inválido (float)', async () => {

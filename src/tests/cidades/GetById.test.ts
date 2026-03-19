@@ -4,6 +4,7 @@ import { testServer } from "../jest.setup";
 describe('Cidades GetById', () => {
 
     it('Buscar Registro', async () => {
+        await testServer.post('/cidades').send({ nome: "Teste" });
         const res = await testServer.get('/cidades/1');
 
         expect(res.status).toEqual(StatusCodes.OK);
