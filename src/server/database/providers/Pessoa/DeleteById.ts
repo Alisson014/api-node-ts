@@ -4,11 +4,12 @@ import { ETableNames } from "../../ETableNames";
 
 export const deleteById = async (id: number): Promise<void | Error | undefined> => {
     try {
-        const result:number = await Knex(ETableNames.cidade).delete().where('id', '=', id).returning('id');
+        const result = await Knex(ETableNames.pessoa).delete().where('id', '=', id);
 
         if (result > 0) return;
 
-        throw new Error("Erro ao deletar registro");
+        throw new Error("Erro ao deletar, registro não encontrado");
+
     } catch (e: unknown) {
         if (e instanceof Error){
             console.error(e);

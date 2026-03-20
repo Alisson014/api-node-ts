@@ -7,8 +7,7 @@ describe('Cidades UpdateById', () => {
         await testServer.post('/cidades').send({ nome: "Teste" });
         const res = await testServer.put('/cidades/1').send({ nome: 'nome' });
 
-        expect(res.status).toEqual(StatusCodes.OK);
-        expect(res.body[0]).toHaveProperty('id');
+        expect(res.status).toEqual(StatusCodes.NO_CONTENT);
     });
 
     it('Id inválido (float)', async () => {

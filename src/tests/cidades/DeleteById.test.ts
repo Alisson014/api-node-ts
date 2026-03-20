@@ -8,7 +8,7 @@ describe('Cidades DeleteById', () => {
 
         const res = await testServer.delete('/cidades/1');
 
-        expect(res.status).toEqual(StatusCodes.OK);
+        expect(res.status).toEqual(StatusCodes.NO_CONTENT);
     });
 
     it('Id inválido (float)', async () => {

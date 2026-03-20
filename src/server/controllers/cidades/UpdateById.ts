@@ -46,5 +46,5 @@ export const updateById = async (req: Request<ParamsType, {}, CidadeBodyType>, r
         });
     };
 
-    return res.status(StatusCodes.OK).json(result);
+    return res.status(StatusCodes.NO_CONTENT).send();
 };

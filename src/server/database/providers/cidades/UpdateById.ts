@@ -2,7 +2,7 @@ import { Knex } from "../../knex";
 import { ETableNames } from "../../ETableNames";
 import type { ICidade } from "../../models";
 
-export const updateById = async (cidade : ICidade): Promise<number | Error | undefined> => {
+export const updateById = async (cidade : ICidade): Promise<void | Error | undefined> => {
     try {
         const result:number = await Knex(ETableNames.cidade).update({ nome: cidade.nome }).where('id', '=', cidade.id).returning('id');
 
@@ -10,7 +10,7 @@ export const updateById = async (cidade : ICidade): Promise<number | Error | und
             throw new Error("Erro ao atualizar registro");
         }
 
-        return result;
+        return;
 
     } catch (e: unknown) {
         if (e instanceof Error){

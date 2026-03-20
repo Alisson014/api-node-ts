@@ -37,13 +37,5 @@ export const deleteById = async (req: Request<ParamsType>, res: Response) => {
         });
     }
 
-    if (typeof result === 'undefined'){
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            errors: {
-                default: 'Ação retornou uma resposta inválida',
-            }
-        });
-    }
-
-    return res.status(StatusCodes.OK).json(result);
+    return res.status(StatusCodes.NO_CONTENT).send();
 };
