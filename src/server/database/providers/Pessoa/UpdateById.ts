@@ -18,8 +18,7 @@ export const updateById = async (id:number, newPessoa: Omit<IPessoa, 'id'>): Pro
             throw new Error("Cidade usada no cadastro não foi encontrada");
         }
 
-        const result:number = await Knex(ETableNames.pessoa).update(newPessoa).where('id', '=', id).returning('id');
-
+        const result:number = await Knex(ETableNames.pessoa).update(newPessoa).where('id', '=', id);
         if (result> 0) return;
 
         throw new Error("Erro ao atualizar registro");

@@ -1,17 +1,13 @@
 import * as create from './Create';
-import * as getAll from './GetAll';
 import * as getById from './GetById';
+import * as getAll from './GetAll';
 import * as updateById from './UpdateById';
 import * as deleteById from './DeleteById';
-import * as count from './Count';
-import * as getByEmail from './GetByEmail';
 
-export const PessoaProvider = {
+export const PessoaController = {
     ...create,
-    ...getAll,
     ...getById,
+    ...getAll,
     ...updateById,
     ...deleteById,
-    ...count,
-    ...getByEmail,
 };

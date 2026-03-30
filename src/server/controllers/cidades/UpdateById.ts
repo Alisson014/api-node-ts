@@ -13,7 +13,7 @@ const paramsValidation: yup.ObjectSchema<ParamsType> = yup.object().shape({
     id: yup.number().integer().required().moreThan(0),
 });
 
-interface CidadeBodyType extends Omit<ICidade, 'id'> {
+export interface CidadeBodyType extends Omit<ICidade, 'id'> {
     nome: string,
 }
 const bodyValidation: yup.ObjectSchema<CidadeBodyType> = yup.object().shape({

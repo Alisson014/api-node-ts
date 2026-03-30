@@ -3,7 +3,7 @@ import type { ICidade } from "../../models";
 import { ETableNames } from "../../ETableNames";
 
 
-export const create = async (cidade : Omit<ICidade, 'id'>): Promise<number | Error> => {
+export const create = async (cidade : Omit<ICidade, 'id'>): Promise<number | Error | undefined> => {
     try {
         const [result] =  await Knex(ETableNames.cidade).insert(cidade).returning('id');
 
@@ -20,5 +20,4 @@ export const create = async (cidade : Omit<ICidade, 'id'>): Promise<number | Err
             return e;
         }
     }
-    return 1;
 };

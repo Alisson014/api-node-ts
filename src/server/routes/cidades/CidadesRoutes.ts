@@ -1,10 +1,7 @@
 import { Router } from "express";
-
 import { CidadesController } from "../../controllers/index.js";
 
-
 const Cidadesrouter = Router();
-
 
 Cidadesrouter.get('/', CidadesController.getAllValidation, CidadesController.getAll);
 Cidadesrouter.get('/:id', CidadesController.getByIdValidation, CidadesController.getById);
