@@ -33,7 +33,7 @@ export const signUp = async (req: Request<{}, {}, IBodyUsuario>, res: Response) 
     if (is_existent) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             errors: {
-                default: "Email já cadastrado"
+                default: "Email inválido"
             }
         });
     }
