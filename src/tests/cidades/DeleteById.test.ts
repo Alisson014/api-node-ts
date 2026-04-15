@@ -2,45 +2,64 @@ import { StatusCodes } from "http-status-codes";
 import { testServer } from "../jest.setup";
 
 describe('Cidades DeleteById', () => {
+    const email = "delete-cidade@test.com";
+    const password = "123456";
+    let token = "";
+
+    beforeAll(async () => {
+        await testServer.post("/usuarios/signUp").send({ nome: "Teste", email: email, senha: password});
+        const res = await testServer.post("/usuarios/signIn").send({ email: email, senha: password });
+
+        token = res.body.accessToken;
+    });
 
     it('Deletar Registro', async () => {
-        await testServer.post('/cidades').send({ nome: "Teste" });
+        await testServer.post('/cidades').set({ authorization: `Bearer ${token}` }).send({ nome: "Teste" });
 
-        const res = await testServer.delete('/cidades/1');
+        const res = await testServer.delete('/cidades/1').set({ authorization: `Bearer ${token}` });
 
         expect(res.status).toEqual(StatusCodes.NO_CONTENT);
     });
 
+    it('Deletar Registro sem token de autorização', async () => {
+        await testServer.post('/cidades').set({ authorization: `Bearer ${token}` }).send({ nome: "Teste" });
+
+        const res = await testServer.delete('/cidades/1');
+
+        expect(res.status).toEqual(StatusCodes.UNAUTHORIZED);
+        expect(res.body).toHaveProperty("errors.default");
+    });
+
     it('Id inválido (float)', async () => {
-        const res = await testServer.delete('/cidades/1.5');
+        const res = await testServer.delete('/cidades/1.5').set({ authorization: `Bearer ${token}` });
 
         expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
         expect(res.body).toHaveProperty('errors.params.id');
     });
 
     it('Id inválido (string)', async () => {
-        const res = await testServer.delete('/cidades/test');
+        const res = await testServer.delete('/cidades/test').set({ authorization: `Bearer ${token}` });
 
         expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
         expect(res.body).toHaveProperty('errors.params.id');
     });
 
     it('Id inválido (boolean)', async () => {
-        const res = await testServer.delete('/cidades/true');
+        const res = await testServer.delete('/cidades/true').set({ authorization: `Bearer ${token}` });
 
         expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
         expect(res.body).toHaveProperty('errors.params.id');
     });
 
     it('Id inválido (menor que zero)', async () => {
-        const res = await testServer.delete('/cidades/-1');
+        const res = await testServer.delete('/cidades/-1').set({ authorization: `Bearer ${token}` });
 
         expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
         expect(res.body).toHaveProperty('errors.params.id');
     });
 
     it('Id inválido (igual a zero)', async () => {
-        const res = await testServer.delete('/cidades/0');
+        const res = await testServer.delete('/cidades/0').set({ authorization: `Bearer ${token}` });
 
         expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
         expect(res.body).toHaveProperty('errors.params.id');

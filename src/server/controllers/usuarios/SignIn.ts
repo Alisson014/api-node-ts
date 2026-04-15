@@ -4,7 +4,7 @@ import type { IUsuario } from "../../database/models";
 import { validation } from "../../shared/middlewares";
 import { UsuariosProvider } from "../../database/providers/usuarios";
 import { StatusCodes } from "http-status-codes";
-import { PasswordCrypto } from "../../shared/services";
+import { JWTService, PasswordCrypto } from "../../shared/services";
 
 export interface IBodyUsuario extends Omit<IUsuario, 'id' | 'nome'> { }
 
@@ -30,6 +30,14 @@ export const signIn = async (req: Request<{}, {}, IBodyUsuario>, res: Response) 
         });
     }
 
+    if (!result){
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+            errors: {
+                default: "Email ou senha inválidos",
+            }
+        });
+    }
+
     const passwordMatch = await PasswordCrypto.verifyPassword(senha, result!.senha);
 
     if (!passwordMatch) {
@@ -39,8 +47,19 @@ export const signIn = async (req: Request<{}, {}, IBodyUsuario>, res: Response) 
             }
         });
     } else {
+
+        const accessToken = JWTService.sign({ uid: result.id });
+
+        if (accessToken === "JWT_SECRET_NOT_FOUND"){
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                errors: {
+                    default: "Erro ao gerar token de acesso",
+                }
+            }); 
+        }
+
         return res.status(StatusCodes.OK).json({
-            accessToken: "teste.teste.teste",
+            accessToken
         });
     }
 };
